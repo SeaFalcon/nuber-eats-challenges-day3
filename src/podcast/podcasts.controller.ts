@@ -7,10 +7,10 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { CreateEpisodeDto } from './dtos/create-episode.dto';
+import { CreateEpisodeInput } from './dtos/create-episode.dto';
 import { CreatePodcastInput } from './dtos/create-podcast.dto';
-import { UpdateEpisodeDto } from './dtos/update-episode.dto';
-import { UpdatePodcastDto } from './dtos/update-podcast.dto';
+import { UpdateEpisodeInput } from './dtos/update-episode.dto';
+import { UpdatePodcastInput } from './dtos/update-podcast.dto';
 import { PodcastsService } from './podcasts.service';
 
 @Controller('/podcasts')
@@ -35,9 +35,9 @@ export class PodcastsController {
   @Patch('/:id')
   updatePodcast(
     @Param('id') id: string,
-    @Body() updatePodcastDto: UpdatePodcastDto,
+    @Body() UpdatePodcastInput: UpdatePodcastInput,
   ) {
-    return this.podcastsService.updatePodcast(id, updatePodcastDto);
+    return this.podcastsService.updatePodcast(id, UpdatePodcastInput);
   }
 
   @Delete('/:id')
@@ -57,7 +57,7 @@ export class EpisodeController {
   @Post('/episodes')
   createEpisode(
     @Param('id') podcastId: string,
-    @Body() createEpisodeDto: CreateEpisodeDto,
+    @Body() createEpisodeDto: CreateEpisodeInput,
   ) {
     return this.podcastService.createEpisode(podcastId, createEpisodeDto);
   }
@@ -66,7 +66,7 @@ export class EpisodeController {
   updateEpisode(
     @Param('id') podcastId: string,
     @Param('episodeId') episodeId: string,
-    @Body() updateEpisodeDto: UpdateEpisodeDto,
+    @Body() updateEpisodeDto: UpdateEpisodeInput,
   ) {
     return this.podcastService.updateEpisode(
       podcastId,
