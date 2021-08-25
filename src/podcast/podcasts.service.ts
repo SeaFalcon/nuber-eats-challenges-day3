@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEpisodeDto } from './dtos/create-episode.dto';
-import { CreatePodcastDto } from './dtos/create-podcast.dto';
+import {
+  CreatePodcastInput,
+  CreatePodcastOutput,
+} from './dtos/create-podcast.dto';
+import { PodcastOutput } from './dtos/podcast.output';
 import { UpdateEpisodeDto } from './dtos/update-episode.dto';
 import { UpdatePodcastDto } from './dtos/update-podcast.dto';
 import { Episode } from './entities/episode.entity';
@@ -10,17 +14,18 @@ import { Podcast } from './entities/podcast.entity';
 export class PodcastsService {
   private podcasts: Podcast[] = [];
 
-  getAllPodcasts(): { podcasts: Podcast[]; err: string | null } {
-    return { podcasts: this.podcasts, err: null };
+  getAllPodcasts(): PodcastOutput {
+    return { podcasts: this.podcasts, err: null, success: true };
   }
 
-  createPodcast({
-    title,
-    category,
-  }: CreatePodcastDto): { id: number; err: string | null } {
+  // getAllPodcasts(): Podcast[] {
+  //   return this.podcasts;
+  // }
+
+  createPodcast({ title, category }: CreatePodcastInput): CreatePodcastOutput {
     const id = Date.now();
     this.podcasts.push({ id, title, category, rating: 0, episodes: [] });
-    return { id, err: null };
+    return { id, err: null, success: true };
   }
 
   getPodcast(id: string): { podcast: Podcast | null; err: string | null } {
